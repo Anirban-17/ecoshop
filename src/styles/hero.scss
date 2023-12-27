@@ -1,0 +1,14 @@
+@media (width < 500px){
+    .container{
+        position: relative;
+    }
+    .heroImage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw !important;
+        height: 100%;
+        opacity: 0.5;
+        filter: brightness(90%);
+    }
+}
