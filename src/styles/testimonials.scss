@@ -1,0 +1,25 @@
+.containertwo {
+    background-image: linear-gradient(0deg, rgba(101, 140, 74, 0.9), rgba(101, 140, 74, 0.9)),
+        url("../assets/bgImg.png");
+    background-size: cover;
+}
+.testimonials {
+    background-color: #e7cec0;
+    opacity: 1;
+    background-image: radial-gradient(#658c4a 1px, #e7cec0 1px);
+    background-size: 18px 18px;
+}
+.newsletter {
+    background: url("../assets/newsletter.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.submit {
+    position: absolute;
+    left: 0;
+}
+.newsletterInput {
+    border-top-right-radius: 2rem !important;
+    border-bottom-right-radius: 2rem !important;
+}
