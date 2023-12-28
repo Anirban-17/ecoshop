@@ -4,11 +4,12 @@ import {
   HStack,
   Heading,
   Image,
+  Skeleton,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomButton from "./CustomButton";
 import heroimg from "../assets/heroImage.png";
 import electronics from "../assets/electronics.jpg";
@@ -56,6 +57,7 @@ export default function Hero() {
             lineHeight={"150%"}
             textAlign={["center", "left"]}
             fontSize={["4xl", "5xl"]}
+            color={"#333"}
           >
             Healthy cutlery, <br /> healthy body
           </Heading>
@@ -80,6 +82,7 @@ export default function Hero() {
         justifyContent={"center"}
         alignItems={"center"}
         maxW={"container.xl"}
+        mx={"auto"}
       >
         <Heading fontFamily={"'Libre Baskerville', serif"} color={"brand.1"}>
           Category for you
@@ -92,23 +95,34 @@ export default function Hero() {
   );
 }
 
-const CategoryCard = ({ name, image }) => (
-  <Box pos={"relative"} w={"100%"} h={"100%"} cursor={"pointer"}>
-    <Image src={image} borderRadius={"0.5rem"} />
-    <Button
-      variant={"unstyled"}
-      disabled="true"
-      borderRadius={"1rem"}
-      px={4}
-      pos={"absolute"}
-      bottom={2}
-      left={2}
-      bgColor={"blackAlpha.700"}
-      color={"white"}
-    >
-      {name}
-    </Button>
-  </Box>
-);
+const CategoryCard = ({ name, image }) => {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true);
+    }, 3000);
+  }, []);
+
+  return (
+    <Skeleton w={"100%"} h={"100%"} borderRadius={"0.5rem"} isLoaded={loaded}>
+      <Box pos={"relative"} w={"100%"} h={"100%"} cursor={"pointer"}>
+        <Image src={image} borderRadius={"0.5rem"} />
+        <Button
+          variant={"unstyled"}
+          disabled="true"
+          borderRadius={"1rem"}
+          px={4}
+          pos={"absolute"}
+          bottom={2}
+          left={2}
+          bgColor={"blackAlpha.700"}
+          color={"white"}
+        >
+          {name}
+        </Button>
+      </Box>
+    </Skeleton>
+  );
+};
 
 // https://www.figma.com/file/gkZuonrgdOIjAKUfcSbi9k/ECO-Shop---Eco-Friendly-Store-Responsive-Website-(Community)?type=design&node-id=877-1178&mode=design&t=wVeCoHnpez7Vt30b-0
