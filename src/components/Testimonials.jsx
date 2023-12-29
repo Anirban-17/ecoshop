@@ -8,7 +8,6 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
-  Skeleton,
   SkeletonCircle,
   SkeletonText,
   Stack,
@@ -29,7 +28,6 @@ import t7 from "../assets/t7.png";
 import t8 from "../assets/t8.png";
 
 import "../styles/testimonials.scss";
-import CustomButton from "./CustomButton";
 
 const cardData = [
   {

@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    // color: #668c4ad6;
+    scroll-behavior: smooth;
 }
 body::-webkit-scrollbar {
     display: none;
@@ -12,6 +12,7 @@ body::-webkit-scrollbar {
 body {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    scroll-behavior: smooth;
 }
 
 // font-family: 'Inter', sans-serif;

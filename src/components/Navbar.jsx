@@ -8,12 +8,13 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Link,
   Text,
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
 import { IoSearch } from "react-icons/io5";
-import { RiUserLine, RiMenuLine } from "react-icons/ri";
+import { RiUserLine, RiMenuLine, RiCloseLine } from "react-icons/ri";
 import { BsHandbag } from "react-icons/bs";
 
 export default function Navbar() {
@@ -69,7 +70,11 @@ export default function Navbar() {
               focusBorderColor="gray.400"
             />
           </InputGroup>
-          <RiMenuLine size={"2rem"} onClick={onToggle} />
+          {isOpen ? (
+            <RiCloseLine size={"2rem"} onClick={onToggle} />
+          ) : (
+            <RiMenuLine size={"2rem"} onClick={onToggle} />
+          )}
         </HStack>
       </Box>
       <Collapse in={isOpen} animateOpacity>
@@ -80,7 +85,7 @@ export default function Navbar() {
           p={5}
           gap={5}
         >
-          <Text cursor={"pointer"}>NEW!</Text>
+          <Link href="#new"><Text cursor={"pointer"}>NEW!</Text></Link>
           <Text cursor={"pointer"}>Electronics</Text>
           <Text cursor={"pointer"}>Jewelery</Text>
           <Text cursor={"pointer"}>Men's Clothing</Text>
