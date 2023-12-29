@@ -25,20 +25,28 @@ import p10 from "../assets/p10.png";
 import p11 from "../assets/p11.png";
 import p12 from "../assets/p12.png";
 import { FaFacebook, FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <Box className="footerContainer" pos={"relative"} py={10}>
-      <Image
-        src={badge}
-        alt="badge"
-        pos={"absolute"}
-        left={"0"}
-        right={"0"}
-        // top={"2rem"}
-        textAlign={"center"}
-        m={"auto"}
-      />
+    <Box
+      className="footerContainer"
+      pos={"relative"}
+      py={10}
+      borderTop={"1px solid #658C4A"}
+    >
+      <Link to={"/"}>
+        <Image
+          src={badge}
+          alt="badge"
+          pos={"absolute"}
+          left={"0"}
+          right={"0"}
+          // top={"2rem"}
+          textAlign={"center"}
+          m={"auto"}
+        />
+      </Link>
       <Grid
         templateColumns={["repeat(2, 1fr)", "repeat(4, 1fr)"]}
         gap={5}

@@ -1,5 +1,7 @@
 import React from "react";
 import logo from "../assets/Logo.png";
+import { Link } from "react-router-dom";
+import { NavHashLink } from "react-router-hash-link";
 import {
   Box,
   Collapse,
@@ -8,7 +10,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Link,
   Text,
   VStack,
   useDisclosure,
@@ -23,7 +24,9 @@ export default function Navbar() {
     <>
       <Box borderBottom={"1.5px solid #658C4A"}>
         <HStack justifyContent={"space-between"} py={4} px={[5, 10]}>
-          <Image src={logo} w={"5rem"} cursor={"pointer"} />
+          <Link to={"/"}>
+            <Image src={logo} w={"5rem"} cursor={"pointer"} />
+          </Link>
           <InputGroup maxW={"container.sm"} display={["none", "inline-flex"]}>
             <InputLeftElement pointerEvents="none">
               <IoSearch color="gray" size={"1.5rem"} />
@@ -50,11 +53,21 @@ export default function Navbar() {
           py={5}
           fontWeight={600}
         >
-          <Text cursor={"pointer"}>NEW!</Text>
-          <Text cursor={"pointer"}>Electronics</Text>
-          <Text cursor={"pointer"}>Jewelery</Text>
-          <Text cursor={"pointer"}>Men's Clothing</Text>
-          <Text cursor={"pointer"}>Women's Clothing</Text>
+          <NavHashLink smooth={true} to="/#new">
+            <Text cursor={"pointer"}>NEW!</Text>
+          </NavHashLink>
+          <Link to={"/products/category/electronics"}>
+            <Text cursor={"pointer"}>Electronics</Text>
+          </Link>
+          <Link to={"/products/category/jewelery"}>
+            <Text cursor={"pointer"}>Jewelery</Text>
+          </Link>
+          <Link to={"/products/category/men's clothing"}>
+            <Text cursor={"pointer"}>Men's Clothing</Text>
+          </Link>
+          <Link to={"/products/category/women's clothing"}>
+            <Text cursor={"pointer"}>Women's Clothing</Text>
+          </Link>
         </HStack>
 
         <HStack display={["flex", "none"]} p={5} gap={5}>
@@ -85,11 +98,21 @@ export default function Navbar() {
           p={5}
           gap={5}
         >
-          <Link href="#new"><Text cursor={"pointer"}>NEW!</Text></Link>
-          <Text cursor={"pointer"}>Electronics</Text>
-          <Text cursor={"pointer"}>Jewelery</Text>
-          <Text cursor={"pointer"}>Men's Clothing</Text>
-          <Text cursor={"pointer"}>Women's Clothing</Text>
+          <NavHashLink smooth={true} to="/#new">
+            <Text cursor={"pointer"}>NEW!</Text>
+          </NavHashLink>
+          <Link to={"/products/category/electronics"}>
+            <Text cursor={"pointer"}>Electronics</Text>
+          </Link>
+          <Link to={"/products/category/jewelery"}>
+            <Text cursor={"pointer"}>Jewelery</Text>
+          </Link>
+          <Link to={"/products/category/men's clothing"}>
+            <Text cursor={"pointer"}>Men's Clothing</Text>
+          </Link>
+          <Link to={"/products/category/women's clothing"}>
+            <Text cursor={"pointer"}>Women's Clothing</Text>
+          </Link>
         </VStack>
       </Collapse>
     </>

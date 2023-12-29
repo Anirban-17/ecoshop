@@ -16,13 +16,15 @@ import CustomButton from "../components/CustomButton";
 import MostWanted from "../components/MostWanted";
 import NewArrivals from "../components/NewArrivals";
 import Testimonials from "../components/Testimonials";
-import Footer from "../components/Footer";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     setTimeout(() => {
-      setIsOpen(true);
+      if(sessionStorage.getItem("isModalShown") === null){
+        sessionStorage.setItem("isModalShown", true);
+        setIsOpen(true);
+      }
     }, 5000);
   }, []);
 
@@ -34,7 +36,6 @@ export default function Home() {
       <MostWanted/>
       <NewArrivals/>
       <Testimonials/>
-      <Footer/>
       <Modal
         closeOnOverlayClick={false}
         onClose={() => setIsOpen(false)}

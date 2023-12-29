@@ -9,6 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -80,46 +81,54 @@ const ProductCard = ({ product }) => {
     }, 3000);
   }, []);
   return (
-    <GridItem rowSpan={1} colSpan={1} cursor={"pointer"}>
-      <VStack alignItems={"flex-start"} textAlign={"left"}>
-        <Skeleton isLoaded={loaded} borderRadius={"1rem"}>
-          <Image
-            src={product.image}
-            alt={product.name}
-            aspectRatio={"1/1"}
-            borderRadius={"1rem"}
-            boxShadow={"0 0 15px gray"}
-          />
-        </Skeleton>
-        <SkeletonText isLoaded={loaded} mt="4" noOfLines={4} spacing="4" skeletonHeight="2">
-          <Text
-            as={"a"}
-            fontFamily={"'Inter', sans-serif"}
-            fontSize={["md", "lg"]}
-            color={"#333"}
-            fontWeight={600}
+    <Link to={`/products/${product.id}`}>
+      <GridItem rowSpan={1} colSpan={1} cursor={"pointer"}>
+        <VStack alignItems={"flex-start"} textAlign={"left"} gap={5}>
+          <Skeleton isLoaded={loaded} borderRadius={"1rem"}>
+            <Image
+              src={product.image}
+              alt={product.name}
+              aspectRatio={"1/1"}
+              borderRadius={"1rem"}
+              boxShadow={"0 0 15px gray"}
+            />
+          </Skeleton>
+          <SkeletonText
+            isLoaded={loaded}
+            mt="4"
+            noOfLines={4}
+            spacing="4"
+            skeletonHeight="2"
           >
-            {product.name}
-          </Text>
-          <Text
-            fontFamily={"'Inter', sans-serif"}
-            fontSize={["md", "lg"]}
-            color={"brand.1"}
-            fontWeight={600}
-          >
-            Rp{product.price}
-          </Text>
-          <Text
-            fontFamily={"'Inter', sans-serif"}
-            fontSize={["sm", "md"]}
-            color={"#666"}
-            fontWeight={600}
-            textDecoration={"line-through"}
-          >
-            Rp{product.mrp}
-          </Text>
-        </SkeletonText>
-      </VStack>
-    </GridItem>
+            <Text
+              as={"a"}
+              fontFamily={"'Inter', sans-serif"}
+              fontSize={["md", "lg"]}
+              color={"#333"}
+              fontWeight={600}
+            >
+              {product.name}
+            </Text>
+            <Text
+              fontFamily={"'Inter', sans-serif"}
+              fontSize={["md", "lg"]}
+              color={"brand.1"}
+              fontWeight={600}
+            >
+              ${product.price}
+            </Text>
+            <Text
+              fontFamily={"'Inter', sans-serif"}
+              fontSize={["sm", "md"]}
+              color={"#666"}
+              fontWeight={600}
+              textDecoration={"line-through"}
+            >
+              ${product.mrp}
+            </Text>
+          </SkeletonText>
+        </VStack>
+      </GridItem>
+    </Link>
   );
 };

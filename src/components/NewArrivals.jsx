@@ -14,6 +14,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import CustomButton from "./CustomButton";
+import { Link } from "react-router-dom";
 
 export default function NewArrivals() {
   const [products, setProducts] = useState([]);
@@ -21,9 +22,7 @@ export default function NewArrivals() {
   useEffect(() => {
     try {
       const getProducts = async () => {
-        const { data } = await axios.get(
-          "https://fakestoreapi.com/products?limit=10"
-        );
+        const { data } = await axios.get("https://fakestoreapi.com/products");
         setProducts(data);
         setIsLoaded(true);
       };
@@ -75,7 +74,7 @@ export default function NewArrivals() {
   };
 
   return (
-    <Container maxW={"container.xl"} py={[10, 20]} px={[5, 10]}>
+    <Container maxW={"container.xl"} py={[10, 20]} px={[5, 10]} id="new">
       <Heading
         fontFamily={"'Libre Baskerville', serif"}
         fontSize={["3xl", "4xl"]}
@@ -91,6 +90,7 @@ export default function NewArrivals() {
           {products.map((product) => (
             <ProductCard
               key={product.id}
+              id={product.id}
               title={product.title}
               price={product.price}
               image={product.image}
@@ -99,37 +99,39 @@ export default function NewArrivals() {
           ))}
         </Slider>
       </Box>
-      <HStack justifyContent={'center'}>
+      <HStack justifyContent={"center"}>
         <CustomButton text="See More" />
       </HStack>
     </Container>
   );
 }
 
-const ProductCard = ({ title, price, image, isLoaded }) => {
+const ProductCard = ({ id, title, price, image, isLoaded }) => {
   return (
-    <Skeleton isLoaded={isLoaded}>
-      <Box maxW={"container.sm"} p={10}>
-        <Image src={image} alt={title} aspectRatio={"1/1"} />
-        <Text
-          mt={5}
-          fontFamily={"'Inter', sans-serif"}
-          fontSize={["md", "lg"]}
-          color={"#333"}
-          fontWeight={600}
-        >
-          {title}
-        </Text>
-        <Text
-          mt={2}
-          fontFamily={"'Inter', sans-serif"}
-          fontSize={["md", "lg"]}
-          color={"brand.1"}
-          fontWeight={600}
-        >
-          Rp{price}
-        </Text>
-      </Box>
-    </Skeleton>
+    <Link to={`/products/${id}`}>
+      <Skeleton isLoaded={isLoaded}>
+        <Box maxW={"container.sm"} p={10}>
+          <Image src={image} alt={title} aspectRatio={"1/1"} />
+          <Text
+            mt={5}
+            fontFamily={"'Inter', sans-serif"}
+            fontSize={["md", "lg"]}
+            color={"#333"}
+            fontWeight={600}
+          >
+            {title}
+          </Text>
+          <Text
+            mt={2}
+            fontFamily={"'Inter', sans-serif"}
+            fontSize={["md", "lg"]}
+            color={"brand.1"}
+            fontWeight={600}
+          >
+            ${price}
+          </Text>
+        </Box>
+      </Skeleton>
+    </Link>
   );
 };

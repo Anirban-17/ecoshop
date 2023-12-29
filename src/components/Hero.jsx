@@ -18,26 +18,27 @@ import menClothing from "../assets/menClothing.jpg";
 import womenClothing from "../assets/womenClothing.jpg";
 
 import "../styles/hero.scss";
+import { Link } from "react-router-dom";
 
 const categories = [
   {
     id: 1,
-    name: "Electronics",
+    name: "electronics",
     image: electronics,
   },
   {
     id: 2,
-    name: "Jewelery",
+    name: "jewelery",
     image: jewelery,
   },
   {
     id: 3,
-    name: "Men's Clothing",
+    name: "men's clothing",
     image: menClothing,
   },
   {
     id: 4,
-    name: "Women's Clothing",
+    name: "women's clothing",
     image: womenClothing,
   },
 ];
@@ -105,22 +106,25 @@ const CategoryCard = ({ name, image }) => {
 
   return (
     <Skeleton w={"100%"} h={"100%"} borderRadius={"0.5rem"} isLoaded={loaded}>
-      <Box pos={"relative"} w={"100%"} h={"100%"} cursor={"pointer"}>
-        <Image src={image} borderRadius={"0.5rem"} />
-        <Button
-          variant={"unstyled"}
-          disabled="true"
-          borderRadius={"1rem"}
-          px={4}
-          pos={"absolute"}
-          bottom={2}
-          left={2}
-          bgColor={"blackAlpha.700"}
-          color={"white"}
-        >
-          {name}
-        </Button>
-      </Box>
+      <Link to={`/products/category/${name}`}>
+        <Box pos={"relative"} w={"100%"} h={"100%"} cursor={"pointer"}>
+          <Image src={image} borderRadius={"0.5rem"} />
+          <Button
+            variant={"unstyled"}
+            disabled="true"
+            borderRadius={"1rem"}
+            px={4}
+            pos={"absolute"}
+            bottom={2}
+            left={2}
+            bgColor={"blackAlpha.700"}
+            color={"white"}
+            textTransform={"capitalize"}
+          >
+            {name}
+          </Button>
+        </Box>
+      </Link>
     </Skeleton>
   );
 };

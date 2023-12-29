@@ -14,7 +14,7 @@ export default function TopBanner() {
       textAlign={"center"}
       fontFamily={"'Inter', sans-serif"}
     >
-      <Text>Free Shipping with minimum purchase Rp250.000</Text>
+      <Text>Free Shipping with minimum purchase $250.000</Text>
     </Box>
   );
 }
