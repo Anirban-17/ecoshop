@@ -10,6 +10,10 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
   VStack,
   useDisclosure,
@@ -17,9 +21,13 @@ import {
 import { IoSearch } from "react-icons/io5";
 import { RiUserLine, RiMenuLine, RiCloseLine } from "react-icons/ri";
 import { BsHandbag } from "react-icons/bs";
+import CustomButton from "./CustomButton";
+import { useFirebase } from "../context/Firebase";
 
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
+  const isSignedIn = useFirebase().isSignedIn;
+  const signOut = useFirebase().signOutUser;
   return (
     <>
       <Box borderBottom={"1.5px solid #658C4A"}>
@@ -40,8 +48,28 @@ export default function Navbar() {
             />
           </InputGroup>
           <HStack gap={5}>
-            <RiUserLine size={"1.5rem"} color="gray" cursor={"pointer"} />
-            <BsHandbag size={"1.5rem"} color="gray" cursor={"pointer"} />
+            {isSignedIn ? (
+              <>
+                <Menu>
+                  <MenuButton>
+                    <RiUserLine
+                      size={"1.5rem"}
+                      color="gray"
+                      cursor={"pointer"}
+                    />
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem>Profile</MenuItem>
+                    <MenuItem onClick={signOut}>Log Out</MenuItem>
+                  </MenuList>
+                </Menu>
+                <BsHandbag size={"1.5rem"} color="gray" cursor={"pointer"} />
+              </>
+            ) : (
+              <Link to={"/login"}>
+                <CustomButton text="Login" />
+              </Link>
+            )}
           </HStack>
         </HStack>
 
