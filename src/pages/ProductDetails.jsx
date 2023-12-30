@@ -67,7 +67,7 @@ export default function ProductDetails() {
               <Text
                 textAlign={["center", "left"]}
                 fontFamily={"'Libre Baskerville', serif"}
-                fontSize={["3xl", "4xl"]}
+                fontSize={["xl", "3xl"]}
                 textTransform={"capitalize"}
               >
                 {product.title}
@@ -77,7 +77,15 @@ export default function ProductDetails() {
                   {product.category}
                 </Badge>
               </Link>
-              <Star rate={product.rating.rate} count={product.rating.count} />
+              <Stack direction={["column", "row"]} gap={3}alignItems={'center'}>
+                <Star rate={product.rating.rate} />
+                <Text
+                  fontFamily={"'Inter', sans-serif"}
+                  color={"gray.500"}
+                >
+                  {product.rating.count} Customer Reviews
+                </Text>
+              </Stack>
               <Text
                 px={[10, 0]}
                 textAlign={["justify", "left"]}

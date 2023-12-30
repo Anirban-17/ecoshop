@@ -26,6 +26,7 @@ import p11 from "../assets/p11.png";
 import p12 from "../assets/p12.png";
 import { FaFacebook, FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 export default function Footer() {
   return (
@@ -71,11 +72,21 @@ export default function Footer() {
             <Text fontWeight={600} fontSize={"xl"} color={"brand.1"}>
               Product Categories
             </Text>
-            <Text>New</Text>
-            <Text>Electronics</Text>
-            <Text>Jewelery</Text>
-            <Text>Men's Clothing</Text>
-            <Text>Women's Clothing</Text>
+            <HashLink to="/#new">
+              <Text cursor={"pointer"}>NEW!</Text>
+            </HashLink>
+            <Link to={"/products/category/electronics"}>
+              <Text cursor={"pointer"}>Electronics</Text>
+            </Link>
+            <Link to={"/products/category/jewelery"}>
+              <Text cursor={"pointer"}>Jewelery</Text>
+            </Link>
+            <Link to={"/products/category/men's clothing"}>
+              <Text cursor={"pointer"}>Men's Clothing</Text>
+            </Link>
+            <Link to={"/products/category/women's clothing"}>
+              <Text cursor={"pointer"}>Women's Clothing</Text>
+            </Link>
           </VStack>
         </GridItem>
         <GridItem>
@@ -91,30 +102,27 @@ export default function Footer() {
           </VStack>
         </GridItem>
         <GridItem>
-          <VStack alignItems={"flex-start"} wrap={"wrap"}>
+          <VStack alignItems={"flex-start"}>
             <Text fontWeight={600} fontSize={"xl"} color={"brand.1"}>
               Payment
             </Text>
-            <VStack>
-              <HStack>
-                <Image src={p1} alt="p1" w={"4rem"} />
-                <Image src={p2} alt="p2" w={"4rem"} />
-                <Image src={p3} alt="p3" w={"4rem"} />
-                <Image src={p4} alt="p4" w={"4rem"} />
-              </HStack>
-              <HStack>
-                <Image src={p5} alt="p5" w={"4rem"} />
-                <Image src={p6} alt="p6" w={"4rem"} />
-                <Image src={p7} alt="p7" w={"4rem"} />
-                <Image src={p8} alt="p8" w={"4rem"} />
-              </HStack>
-              <HStack>
-                <Image src={p9} alt="p9" w={"4rem"} />
-                <Image src={p10} alt="p10" w={"4rem"} />
-                <Image src={p11} alt="p11" w={"4rem"} />
-                <Image src={p12} alt="p12" w={"4rem"} />
-              </HStack>
-            </VStack>
+            <Grid
+              templateColumns={["repeat(3, 1fr)", "repeat(4, 1fr)"]}
+              gap={2}
+            >
+              <Image src={p1} alt="payment method 1" w={"4rem"} />
+              <Image src={p2} alt="payment method 2" w={"4rem"} />
+              <Image src={p3} alt="payment method 3" w={"4rem"} />
+              <Image src={p4} alt="payment method 4" w={"4rem"} />
+              <Image src={p5} alt="payment method 5" w={"4rem"} />
+              <Image src={p6} alt="payment method 6" w={"4rem"} />
+              <Image src={p7} alt="payment method 7" w={"4rem"} />
+              <Image src={p8} alt="payment method 8" w={"4rem"} />
+              <Image src={p9} alt="payment method 9" w={"4rem"} />
+              <Image src={p10} alt="payment method 10" w={"4rem"} />
+              <Image src={p11} alt="payment method 11" w={"4rem"} />
+              <Image src={p12} alt="payment method 12" w={"4rem"} />
+            </Grid>
           </VStack>
         </GridItem>
       </Grid>
@@ -125,15 +133,32 @@ export default function Footer() {
         alignItems={"center"}
         gap={5}
       >
-        <VStack order={[2, 1]}>
+        <VStack order={[2, 1]} textAlign={"center"}>
           <Text>© 2023 ECO Shop India. All Rights Reserved.</Text>
           <Text>Made with 💓 by Sayandeep Adhikary.</Text>
         </VStack>
         <HStack order={[1, 2]} gap={5}>
-          <FaFacebook size={"2rem"} color="black" />
-          <FaInstagram size={"2rem"} color="black" />
-          <FaLinkedin size={"2rem"} color="black" />
-          <FaGithub size={"2rem"} color="black" />
+          <a
+            href="https://www.facebook.com/profile.php?id=100073317752458"
+            target="blank"
+          >
+            <FaFacebook size={"2rem"} color="black" />
+          </a>
+          <a
+            href="https://www.instagram.com/sayandeep.adhikary/"
+            target="blank"
+          >
+            <FaInstagram size={"2rem"} color="black" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/sayandeep-adhikary/"
+            target="blank"
+          >
+            <FaLinkedin size={"2rem"} color="black" />
+          </a>
+          <a href="https://github.com/sayandeep-adhikary" target="blank">
+            <FaGithub size={"2rem"} color="black" />
+          </a>
         </HStack>
       </Stack>
     </Box>

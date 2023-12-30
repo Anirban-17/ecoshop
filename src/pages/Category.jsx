@@ -69,7 +69,7 @@ export default function Category() {
             maxW={"xs"}
             focusBorderColor="brand.1"
             defaultValue={"asc"}
-            onChange={(e)=>setSort(e.currentTarget.value)}
+            onChange={(e) => setSort(e.currentTarget.value)}
           >
             <option value="desc">Price High to Low</option>
             <option value="asc">Price Low to High</option>
@@ -145,7 +145,16 @@ const ProductCard = ({ product }) => {
         >
           {product.title}
         </Text>
-        <Star rate={product.rating.rate} count={product.rating.count} />
+        <HStack>
+          <Star rate={product.rating.rate} />
+          <Text
+            fontFamily={"'Inter', sans-serif"}
+            fontSize={["sm", "md"]}
+            color={"gray.500"}
+          >
+            {product.rating.count} Customer Reviews
+          </Text>
+        </HStack>
         <Text
           fontFamily={"'Inter', sans-serif"}
           fontSize={["md", "lg"]}

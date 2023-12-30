@@ -1,9 +1,9 @@
 import React from "react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
-import { HStack, Text } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 
-export default function Star({ rate, count }) {
+export default function Star({ rate }) {
   const ratingStar = Array.from({ length: 5 }, (_, index) => {
     let number = index + 0.5;
     return (
@@ -18,8 +18,5 @@ export default function Star({ rate, count }) {
       </span>
     );
   });
-  return <HStack>
-    {ratingStar}
-    <Text>{count} Customer Reviews</Text>
-  </HStack>;
+  return <HStack>{ratingStar}</HStack>;
 }
