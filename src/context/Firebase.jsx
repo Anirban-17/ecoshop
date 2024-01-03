@@ -51,7 +51,13 @@ export const FirebaseProvider = ({ children }) => {
       });
   };
   const signInWithGoogle = () => {
-    return signInWithPopup(firebaseAuth, googleProvider);
+    signInWithPopup(firebaseAuth, googleProvider)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const signInUserWithEmailAndPassword = (email, password) => {
     signInWithEmailAndPassword(firebaseAuth, email, password)
