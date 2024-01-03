@@ -35,6 +35,7 @@ export const FirebaseProvider = ({ children }) => {
     onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
         setUser(user);
+        // console.log(user);
       } else {
         setUser(null);
       }
@@ -44,54 +45,31 @@ export const FirebaseProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const signUpUserWithEmailAndPassword = (email, password) => {
-    createUserWithEmailAndPassword(firebaseAuth, email, password)
-      .then((user) => {
-        setUser(user);
-      })
-      .catch((error) => {
+    createUserWithEmailAndPassword(firebaseAuth, email, password).catch(
+      (error) => {
         setError(error.code.split("auth/")[1].split("-").join(" "));
-        // console.log(error.code.split("auth/")[1].split("-").join(" "));
-      });
+      }
+    );
   };
   const signInWithGoogle = () => {
-    signInWithPopup(firebaseAuth, googleProvider)
-      .then((result) => {
-        setUser(result.user);
-      })
-      .catch((error) => {
-        setError(error.code.split("auth/")[1].split("-").join(" "));
-        // console.log(error.code.split("auth/")[1].split("-").join(" "));
-      });
+    signInWithPopup(firebaseAuth, googleProvider).catch((error) => {
+      setError(error.code.split("auth/")[1].split("-").join(" "));
+    });
   };
   const signInWithGithub = () => {
-    signInWithPopup(firebaseAuth, githubProvider)
-      .then((result) => {
-        setUser(result.user);
-      })
-      .catch((error) => {
-        setError(error.code.split("auth/")[1].split("-").join(" "));
-        // console.log(error.code.split("auth/")[1].split("-").join(" "));
-      });
+    signInWithPopup(firebaseAuth, githubProvider).catch((error) => {
+      setError(error.code.split("auth/")[1].split("-").join(" "));
+    });
   };
   const signInUserWithEmailAndPassword = (email, password) => {
-    signInWithEmailAndPassword(firebaseAuth, email, password)
-      .then((user) => {
-        setUser(user);
-      })
-      .catch((error) => {
-        setError(error.code.split("auth/")[1].split("-").join(" "));
-        // console.log(error.code.split("auth/")[1].split("-").join(" "));
-      });
+    signInWithEmailAndPassword(firebaseAuth, email, password).catch((error) => {
+      setError(error.code.split("auth/")[1].split("-").join(" "));
+    });
   };
   const signOutUser = () => {
-    signOut(firebaseAuth)
-      .then(() => {
-        setUser(null);
-      })
-      .catch((error) => {
-        setError(error.code.split("auth/")[1].split("-").join(" "));
-        // console.log(error.code.split("auth/")[1].split("-").join(" "));
-      });
+    signOut(firebaseAuth).catch((error) => {
+      setError(error.code.split("auth/")[1].split("-").join(" "));
+    });
   };
   const isSignedIn = user ? true : false;
   return (
