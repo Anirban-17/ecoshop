@@ -30,12 +30,10 @@ export default function Login() {
     firebase.signInUserWithEmailAndPassword;
   const signInWithGoogle = firebase.signInWithGoogle;
   const signInWithGithub = firebase.signInWithGithub;
-  const setError = firebase.setError;
   useEffect(() => {
     window.scrollTo(0, 0);
     if (firebase.isSignedIn) {
       navigate("/");
-      setError(null);
     }
   }, [firebase, navigate]);
   return (
@@ -88,18 +86,6 @@ export default function Login() {
             </InputRightAddon>
           </InputGroup>
         </FormControl>
-        {firebase.error && (
-          <HStack>
-            <MdError color="red" />
-            <Text
-              textTransform={"capitalize"}
-              color={"red"}
-              textAlign={"center"}
-            >
-              {firebase.error} !
-            </Text>
-          </HStack>
-        )}
         <Button
           my={5}
           borderRadius={"2rem"}
@@ -157,7 +143,6 @@ export default function Login() {
             fontFamily={"'Inter', sans-serif"}
             w={"full"}
             _hover={{ bgColor: "rgba(101, 140, 74, 0.2)" }}
-            onClick={() => setError(null)}
           >
             Sign Up
           </Button>

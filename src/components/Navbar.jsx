@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { IoSearch } from "react-icons/io5";
 import { RiUserLine, RiMenuLine, RiCloseLine } from "react-icons/ri";
+import { MdLogout } from "react-icons/md";
 import { BsHandbag } from "react-icons/bs";
 import CustomButton from "./CustomButton";
 import { useFirebase } from "../context/Firebase";
@@ -60,7 +61,9 @@ export default function Navbar() {
                   </MenuButton>
                   <MenuList>
                     <MenuItem>Profile</MenuItem>
-                    <MenuItem onClick={signOut}>Log Out</MenuItem>
+                    <MenuItem onClick={signOut} color={"red"} bgColor={""}>
+                      <MdLogout /> &nbsp;Log Out
+                    </MenuItem>
                   </MenuList>
                 </Menu>
                 <BsHandbag size={"1.5rem"} color="gray" cursor={"pointer"} />

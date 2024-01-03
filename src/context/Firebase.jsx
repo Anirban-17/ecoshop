@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
+import { useToast } from "@chakra-ui/react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -20,6 +21,10 @@ const firebaseConfig = {
   appId: "1:1024688150342:web:366331664d56a397673747",
   measurementId: "G-5853F8Q1FG",
 };
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
@@ -42,34 +47,122 @@ export const FirebaseProvider = ({ children }) => {
     });
   }, []);
 
-  const [error, setError] = useState(null);
+  const toast = useToast();
 
   const signUpUserWithEmailAndPassword = (email, password) => {
-    createUserWithEmailAndPassword(firebaseAuth, email, password).catch(
-      (error) => {
-        setError(error.code.split("auth/")[1].split("-").join(" "));
-      }
-    );
+    createUserWithEmailAndPassword(firebaseAuth, email, password)
+      .then(() => {
+        toast({
+          title: "Account created.",
+          status: "success",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: capitalizeFirstLetter(
+            error.code.split("auth/")[1].split("-").join(" ")
+          ),
+          status: "error",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      });
   };
   const signInWithGoogle = () => {
-    signInWithPopup(firebaseAuth, googleProvider).catch((error) => {
-      setError(error.code.split("auth/")[1].split("-").join(" "));
-    });
+    signInWithPopup(firebaseAuth, googleProvider)
+      .then(() => {
+        toast({
+          title: "Signed In Successfully.",
+          status: "success",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: capitalizeFirstLetter(
+            error.code.split("auth/")[1].split("-").join(" ")
+          ),
+          status: "error",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      });
   };
   const signInWithGithub = () => {
-    signInWithPopup(firebaseAuth, githubProvider).catch((error) => {
-      setError(error.code.split("auth/")[1].split("-").join(" "));
-    });
+    signInWithPopup(firebaseAuth, githubProvider)
+      .then(() => {
+        toast({
+          title: "Signed In Successfully.",
+          status: "success",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: capitalizeFirstLetter(
+            error.code.split("auth/")[1].split("-").join(" ")
+          ),
+          status: "error",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      });
   };
   const signInUserWithEmailAndPassword = (email, password) => {
-    signInWithEmailAndPassword(firebaseAuth, email, password).catch((error) => {
-      setError(error.code.split("auth/")[1].split("-").join(" "));
-    });
+    signInWithEmailAndPassword(firebaseAuth, email, password)
+      .then(() => {
+        toast({
+          title: "Signed In Successfully.",
+          status: "success",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: capitalizeFirstLetter(
+            error.code.split("auth/")[1].split("-").join(" ")
+          ),
+          status: "error",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      });
   };
   const signOutUser = () => {
-    signOut(firebaseAuth).catch((error) => {
-      setError(error.code.split("auth/")[1].split("-").join(" "));
-    });
+    signOut(firebaseAuth)
+      .then(() => {
+        toast({
+          title: "Signed Out Successfully.",
+          status: "success",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: capitalizeFirstLetter(
+            error.code.split("auth/")[1].split("-").join(" ")
+          ),
+          status: "error",
+          variant: "subtle",
+          position: "top",
+          isClosable: true,
+        });
+      });
   };
   const isSignedIn = user ? true : false;
   return (
@@ -81,8 +174,6 @@ export const FirebaseProvider = ({ children }) => {
         signInWithGithub,
         signInUserWithEmailAndPassword,
         signOutUser,
-        error,
-        setError,
       }}
     >
       {children}
