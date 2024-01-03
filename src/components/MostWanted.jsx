@@ -35,11 +35,11 @@ const products = [
     mrp: "189.88",
   },
   {
-    id: 4,
-    name: "Mens Casual Slim Fit",
-    image: "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
-    price: 15.99,
-    mrp: "46.40",
+    id: 18,
+    name: "MBJ Women's Solid Short Sleeve Boat Neck V",
+    image:  "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_.jpg",
+    price: 9.85,
+    mrp: "19.85",
   },
 ];
 

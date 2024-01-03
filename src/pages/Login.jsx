@@ -4,6 +4,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  HStack,
   Heading,
   Input,
   InputGroup,
@@ -12,30 +13,34 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaGithub, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { MdError } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useFirebase } from "../context/Firebase";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const firebase = useFirebase();
-    const signInUserWithEmailAndPassword =
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const firebase = useFirebase();
+  const signInUserWithEmailAndPassword =
     firebase.signInUserWithEmailAndPassword;
-    const signInWithGoogle = firebase.signInWithGoogle;
-    useEffect(() => {
-      window.scrollTo(0, 0);
-      if(firebase.isSignedIn){
-        navigate("/");
-      }
-    }, [firebase, navigate]);
+  const signInWithGoogle = firebase.signInWithGoogle;
+  const signInWithGithub = firebase.signInWithGithub;
+  const setError = firebase.setError;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (firebase.isSignedIn) {
+      navigate("/");
+      setError(null);
+    }
+  }, [firebase, navigate]);
   return (
     <Container maxW={"container.sm"} p={[5, 10]} m={"auto"}>
-      <VStack p={10} borderRadius={"2rem"} boxShadow={"0 0 10px #999"}>
+      <VStack p={[5, 10]} borderRadius={"2rem"} boxShadow={"0 0 10px #999"}>
         <Heading
           fontFamily={"'Libre Baskerville', serif"}
           lineHeight={"150%"}
@@ -83,6 +88,18 @@ export default function Login() {
             </InputRightAddon>
           </InputGroup>
         </FormControl>
+        {firebase.error && (
+          <HStack>
+            <MdError color="red" />
+            <Text
+              textTransform={"capitalize"}
+              color={"red"}
+              textAlign={"center"}
+            >
+              {firebase.error} !
+            </Text>
+          </HStack>
+        )}
         <Button
           my={5}
           borderRadius={"2rem"}
@@ -107,11 +124,26 @@ export default function Login() {
           letterSpacing={"1px"}
           fontFamily={"'Inter', sans-serif"}
           w={"full"}
-          _hover={{ bgColor: "rgba(101, 140, 74, 0.9)", color: "white" }}
+          _hover={{ bgColor: "rgba(101, 140, 74, 0.2)" }}
           leftIcon={<FcGoogle size={20} />}
           onClick={signInWithGoogle}
         >
           Login with Google
+        </Button>
+        <Button
+          mb={5}
+          borderRadius={"2rem"}
+          border={"1px solid #658C4A"}
+          color={"brand.1"}
+          variant={"outline"}
+          letterSpacing={"1px"}
+          fontFamily={"'Inter', sans-serif"}
+          w={"full"}
+          _hover={{ bgColor: "rgba(101, 140, 74, 0.2)" }}
+          leftIcon={<FaGithub size={20} />}
+          onClick={signInWithGithub}
+        >
+          Login with Github
         </Button>
         <Text fontFamily={"'Inter', sans-serif"}>Don't have an account?</Text>
         <Link to={"/signup"} style={{ width: "100%" }}>
@@ -124,7 +156,8 @@ export default function Login() {
             letterSpacing={"1px"}
             fontFamily={"'Inter', sans-serif"}
             w={"full"}
-            _hover={{ bgColor: "rgba(101, 140, 74, 0.9)", color: "white" }}
+            _hover={{ bgColor: "rgba(101, 140, 74, 0.2)" }}
+            onClick={() => setError(null)}
           >
             Sign Up
           </Button>

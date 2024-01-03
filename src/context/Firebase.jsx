@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  GithubAuthProvider,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -23,6 +24,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 const FirebaseContext = createContext(null);
 export const useFirebase = () => useContext(FirebaseContext);
@@ -39,7 +41,7 @@ export const FirebaseProvider = ({ children }) => {
     });
   }, []);
 
-  const isSignedIn = user ? true : false;
+  const [error, setError] = useState(null);
 
   const signUpUserWithEmailAndPassword = (email, password) => {
     createUserWithEmailAndPassword(firebaseAuth, email, password)
@@ -47,7 +49,8 @@ export const FirebaseProvider = ({ children }) => {
         setUser(user);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error.code.split("auth/")[1].split("-").join(" "));
+        // console.log(error.code.split("auth/")[1].split("-").join(" "));
       });
   };
   const signInWithGoogle = () => {
@@ -56,7 +59,18 @@ export const FirebaseProvider = ({ children }) => {
         setUser(result.user);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error.code.split("auth/")[1].split("-").join(" "));
+        // console.log(error.code.split("auth/")[1].split("-").join(" "));
+      });
+  };
+  const signInWithGithub = () => {
+    signInWithPopup(firebaseAuth, githubProvider)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        setError(error.code.split("auth/")[1].split("-").join(" "));
+        // console.log(error.code.split("auth/")[1].split("-").join(" "));
       });
   };
   const signInUserWithEmailAndPassword = (email, password) => {
@@ -65,20 +79,32 @@ export const FirebaseProvider = ({ children }) => {
         setUser(user);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error.code.split("auth/")[1].split("-").join(" "));
+        // console.log(error.code.split("auth/")[1].split("-").join(" "));
       });
   };
   const signOutUser = () => {
-    signOut(firebaseAuth);
+    signOut(firebaseAuth)
+      .then(() => {
+        setUser(null);
+      })
+      .catch((error) => {
+        setError(error.code.split("auth/")[1].split("-").join(" "));
+        // console.log(error.code.split("auth/")[1].split("-").join(" "));
+      });
   };
+  const isSignedIn = user ? true : false;
   return (
     <FirebaseContext.Provider
       value={{
         signUpUserWithEmailAndPassword,
         isSignedIn,
         signInWithGoogle,
+        signInWithGithub,
         signInUserWithEmailAndPassword,
         signOutUser,
+        error,
+        setError,
       }}
     >
       {children}

@@ -20,6 +20,7 @@ import Testimonials from "../components/Testimonials";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
+    window.scrollTo(0, 0);
     setTimeout(() => {
       if(sessionStorage.getItem("isModalShown") === null){
         sessionStorage.setItem("isModalShown", true);

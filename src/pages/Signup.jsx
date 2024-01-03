@@ -4,6 +4,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  HStack,
   Heading,
   Input,
   InputGroup,
@@ -12,8 +13,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaGithub, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { MdError } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useFirebase } from "../context/Firebase";
 
@@ -26,15 +28,18 @@ export default function Signup() {
   const createUserWithEmailAndPassword =
     firebase.signUpUserWithEmailAndPassword;
   const signInWithGoogle = firebase.signInWithGoogle;
+  const signInWithGithub = firebase.signInWithGithub;
+  const setError = firebase.setError;
   useEffect(() => {
     window.scrollTo(0, 0);
     if (firebase.isSignedIn) {
       navigate("/");
+      setError(null)
     }
   }, [firebase, navigate]);
   return (
     <Container maxW={"container.sm"} p={[5, 10]} m={"auto"}>
-      <VStack p={10} borderRadius={"2rem"} boxShadow={"0 0 10px #999"}>
+      <VStack p={[5, 10]} borderRadius={"2rem"} boxShadow={"0 0 10px #999"}>
         <Heading
           fontFamily={"'Libre Baskerville', serif"}
           lineHeight={"150%"}
@@ -82,6 +87,18 @@ export default function Signup() {
             </InputRightAddon>
           </InputGroup>
         </FormControl>
+        {firebase.error && (
+          <HStack>
+            <MdError color="red"/>
+            <Text
+              textTransform={"capitalize"}
+              color={"red"}
+              textAlign={"center"}
+            >
+              {firebase.error} !
+            </Text>
+          </HStack>
+        )}
         <Button
           my={5}
           borderRadius={"2rem"}
@@ -106,11 +123,26 @@ export default function Signup() {
           letterSpacing={"1px"}
           fontFamily={"'Inter', sans-serif"}
           w={"full"}
-          _hover={{ bgColor: "rgba(101, 140, 74, 0.9)", color: "white" }}
+          _hover={{ bgColor: "rgba(101, 140, 74, 0.2)" }}
           leftIcon={<FcGoogle size={20} />}
           onClick={() => signInWithGoogle()}
         >
           Sign Up with Google
+        </Button>
+        <Button
+          mb={5}
+          borderRadius={"2rem"}
+          border={"1px solid #658C4A"}
+          color={"brand.1"}
+          variant={"outline"}
+          letterSpacing={"1px"}
+          fontFamily={"'Inter', sans-serif"}
+          w={"full"}
+          _hover={{ bgColor: "rgba(101, 140, 74, 0.2)" }}
+          leftIcon={<FaGithub size={20} />}
+          onClick={signInWithGithub}
+        >
+          Sign Up with Github
         </Button>
         <Text fontFamily={"'Inter', sans-serif"}>Already have an account?</Text>
         <Link to={"/login"} style={{ width: "100%" }}>
@@ -123,7 +155,8 @@ export default function Signup() {
             letterSpacing={"1px"}
             fontFamily={"'Inter', sans-serif"}
             w={"full"}
-            _hover={{ bgColor: "rgba(101, 140, 74, 0.9)", color: "white" }}
+            _hover={{ bgColor: "rgba(101, 140, 74, 0.2)" }}
+            onClick={() => setError(null)}
           >
             Login
           </Button>
