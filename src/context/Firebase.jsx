@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { useToast } from "@chakra-ui/react";
 import {
@@ -42,7 +42,7 @@ export const FirebaseProvider = ({ children }) => {
     onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
         setUser(user);
-        console.log(user);
+        // console.log(user);
       } else {
         setUser(null);
       }
@@ -160,12 +160,13 @@ export const FirebaseProvider = ({ children }) => {
     signOut(firebaseAuth)
       .then(() => {
         toast({
-          title: "Signed Out Successfully.",
+          title: "Logged Out Successfully.",
           status: "success",
           variant: "subtle",
           position: "top",
           isClosable: true,
         });
+        
       })
       .catch((error) => {
         toast({

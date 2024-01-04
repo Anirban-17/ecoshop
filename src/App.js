@@ -3,6 +3,7 @@ import Category from "./pages/Category";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ProductDetails from "./pages/ProductDetails";
+import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import "./styles/App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -16,6 +17,7 @@ function App() {
         <Route path="/products/category/:category" element={<Category />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile/:uid" element={<Profile />} />
       </Routes>
       <Footer />
     </Router>

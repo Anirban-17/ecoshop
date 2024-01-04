@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../assets/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavHashLink } from "react-router-hash-link";
 import {
   Box,
@@ -27,10 +27,12 @@ import CustomButton from "./CustomButton";
 import { useFirebase } from "../context/Firebase";
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
   const isSignedIn = useFirebase().isSignedIn;
   const signOut = useFirebase().signOutUser;
   const userName = useFirebase().user?.displayName;
+  const user = useFirebase().user;
   return (
     <>
       <Box borderBottom={"1.5px solid #658C4A"}>
@@ -62,10 +64,19 @@ export default function Navbar() {
                     />
                   </MenuButton>
                   <MenuList>
-                    <MenuItem textTransform={"capitalize"}>
-                      <FaRegUserCircle color="#658c4a" /> &nbsp; {userName}
-                    </MenuItem>
-                    <MenuItem onClick={signOut} color={"red"} bgColor={""}>
+                    <Link to={`/profile/${user.uid}`}>
+                      <MenuItem textTransform={"capitalize"}>
+                        <FaRegUserCircle color="#658c4a" /> &nbsp;
+                        {userName !== null ? userName : "User"}
+                      </MenuItem>
+                    </Link>
+                    <MenuItem
+                      onClick={() => {
+                        signOut();
+                        navigate("/");
+                      }}
+                      color={"red"}
+                    >
                       <MdLogout /> &nbsp;Log Out
                     </MenuItem>
                   </MenuList>
