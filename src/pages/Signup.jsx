@@ -4,7 +4,6 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
-  HStack,
   Heading,
   Input,
   InputGroup,
@@ -15,7 +14,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { FaGithub, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { MdError } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useFirebase } from "../context/Firebase";
 

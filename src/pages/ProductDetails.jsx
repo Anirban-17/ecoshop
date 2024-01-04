@@ -63,6 +63,7 @@ export default function ProductDetails() {
               alignItems={["center", "flex-start"]}
               justifyContent={"space-evenly"}
               gap={10}
+              maxW={'initial'}
             >
               <Text
                 textAlign={["center", "left"]}
@@ -77,17 +78,18 @@ export default function ProductDetails() {
                   {product.category}
                 </Badge>
               </Link>
-              <Stack direction={["column", "row"]} gap={3}alignItems={'center'}>
+              <Stack
+                direction={["column", "row"]}
+                gap={3}
+                alignItems={"center"}
+              >
                 <Star rate={product.rating.rate} />
-                <Text
-                  fontFamily={"'Inter', sans-serif"}
-                  color={"gray.500"}
-                >
+                <Text fontFamily={"'Inter', sans-serif"} color={"gray.500"}>
                   {product.rating.count} Customer Reviews
                 </Text>
               </Stack>
               <Text
-                px={[10, 0]}
+                px={[2, 0]}
                 textAlign={["justify", "left"]}
                 fontFamily={"'Inter', sans-serif"}
                 textTransform={"capitalize"}
