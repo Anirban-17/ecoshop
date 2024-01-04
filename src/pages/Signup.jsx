@@ -20,6 +20,7 @@ import { useFirebase } from "../context/Firebase";
 export default function Signup() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const firebase = useFirebase();
@@ -48,6 +49,17 @@ export default function Signup() {
           Sign Up
         </Heading>
         <FormControl fontFamily={"'Inter', sans-serif"}>
+          <FormLabel>Full Name</FormLabel>
+          <Input
+            mb={5}
+            type="text"
+            borderRadius={"2rem"}
+            placeholder="Your Name"
+            focusBorderColor="#658C4A"
+            border={"1px solid #658C4A"}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <FormLabel>Email address</FormLabel>
           <Input
             type="email"
@@ -93,7 +105,7 @@ export default function Signup() {
           fontFamily={"'Inter', sans-serif"}
           w={"full"}
           _hover={{ bgColor: "rgba(101, 140, 74, 0.9)" }}
-          onClick={() => createUserWithEmailAndPassword(email, password)}
+          onClick={() => createUserWithEmailAndPassword(name, email, password)}
         >
           Sign Up
         </Button>

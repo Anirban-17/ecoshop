@@ -21,6 +21,7 @@ import {
 import { IoSearch } from "react-icons/io5";
 import { RiUserLine, RiMenuLine, RiCloseLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
+import { FaRegUserCircle } from "react-icons/fa";
 import { BsHandbag } from "react-icons/bs";
 import CustomButton from "./CustomButton";
 import { useFirebase } from "../context/Firebase";
@@ -29,6 +30,7 @@ export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
   const isSignedIn = useFirebase().isSignedIn;
   const signOut = useFirebase().signOutUser;
+  const userName = useFirebase().user?.displayName;
   return (
     <>
       <Box borderBottom={"1.5px solid #658C4A"}>
@@ -60,7 +62,9 @@ export default function Navbar() {
                     />
                   </MenuButton>
                   <MenuList>
-                    <MenuItem>Profile</MenuItem>
+                    <MenuItem textTransform={"capitalize"}>
+                      <FaRegUserCircle color="#658c4a" /> &nbsp; {userName}
+                    </MenuItem>
                     <MenuItem onClick={signOut} color={"red"} bgColor={""}>
                       <MdLogout /> &nbsp;Log Out
                     </MenuItem>

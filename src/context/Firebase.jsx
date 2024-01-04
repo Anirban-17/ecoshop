@@ -10,6 +10,8 @@ import {
   onAuthStateChanged,
   signOut,
   GithubAuthProvider,
+  updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -40,7 +42,7 @@ export const FirebaseProvider = ({ children }) => {
     onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
         setUser(user);
-        // console.log(user);
+        console.log(user);
       } else {
         setUser(null);
       }
@@ -49,9 +51,22 @@ export const FirebaseProvider = ({ children }) => {
 
   const toast = useToast();
 
-  const signUpUserWithEmailAndPassword = (email, password) => {
+  const signUpUserWithEmailAndPassword = (name, email, password) => {
     createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then(() => {
+        updateProfile(firebaseAuth.currentUser, {
+          displayName: name,
+        }).then(() => {
+          sendEmailVerification(firebaseAuth.currentUser).then(() => {
+            toast({
+              title: "Email verification sent.",
+              status: "success",
+              variant: "subtle",
+              position: "top",
+              isClosable: true,
+            });
+          });
+        });
         toast({
           title: "Account created.",
           status: "success",
@@ -174,6 +189,7 @@ export const FirebaseProvider = ({ children }) => {
         signInWithGithub,
         signInUserWithEmailAndPassword,
         signOutUser,
+        user,
       }}
     >
       {children}
