@@ -89,7 +89,6 @@ export default function ProductDetails() {
                 </Text>
               </Stack>
               <Text
-                px={[2, 0]}
                 textAlign={["justify", "left"]}
                 fontFamily={"'Inter', sans-serif"}
                 textTransform={"capitalize"}
