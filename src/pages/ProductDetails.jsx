@@ -93,6 +93,7 @@ export default function ProductDetails() {
                 textAlign={["justify", "left"]}
                 fontFamily={"'Inter', sans-serif"}
                 textTransform={"capitalize"}
+                lineHeight={'180%'}
               >
                 {product.description}
               </Text>

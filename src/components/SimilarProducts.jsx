@@ -64,7 +64,7 @@ function SimilarProducts({ category }) {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [category]);
 
   return (
     <Container maxW={"container.xl"} p={8}>
