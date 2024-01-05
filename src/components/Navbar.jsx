@@ -41,7 +41,7 @@ export default function Navbar() {
     onValue(ref(db, `users/${user?.uid}`), (snapshot) => {
       setUserDetails(snapshot.val());
     });
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -68,8 +68,8 @@ export default function Navbar() {
                 <Menu>
                   <MenuButton>
                     <Avatar
-                    src={userDetails?.photoURL}
-                    name={userDetails?.name}
+                      src={userDetails?.photoURL}
+                      name={userDetails?.name}
                       bgColor={"white"}
                       border={"1.5px solid gray"}
                       size={"sm"}

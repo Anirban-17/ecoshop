@@ -14,6 +14,7 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
+  Spinner,
   Stack,
   Text,
   VStack,
@@ -51,7 +52,7 @@ export default function Profile() {
     onValue(ref(db, `users/${uid}`), (snapshot) => {
       setUserDetails(snapshot.val());
     });
-  }, []);
+  }, [uid]);
 
   return (
     <>
@@ -92,6 +93,7 @@ export default function Profile() {
               color={"white"}
               _hover={{ bgColor: "rgba(101, 140, 74, 0.9)" }}
               onClick={onOpen}
+              _focusVisible={{ outline: "none" }}
             >
               <FaEdit /> &nbsp; Edit Profile
             </Button>
