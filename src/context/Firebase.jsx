@@ -13,6 +13,13 @@ import {
   updateProfile,
   sendEmailVerification,
 } from "firebase/auth";
+import {
+  getDownloadURL,
+  getStorage,
+  ref as ref_storage,
+  uploadBytes,
+} from "firebase/storage";
+import { getDatabase, ref as ref_db, set } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC_tlSLNCd7UwEn1FQYwrqLyNzNzs0U9DQ",
@@ -22,6 +29,7 @@ const firebaseConfig = {
   messagingSenderId: "1024688150342",
   appId: "1:1024688150342:web:366331664d56a397673747",
   measurementId: "G-5853F8Q1FG",
+  databaseURL: "https://ecoshop-b5edf-default-rtdb.firebaseio.com",
 };
 
 function capitalizeFirstLetter(string) {
@@ -32,12 +40,15 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
+export const storage = getStorage(firebaseApp);
+export const db = getDatabase(firebaseApp);
 
 const FirebaseContext = createContext(null);
 export const useFirebase = () => useContext(FirebaseContext);
 
 export const FirebaseProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userName, setUserName] = useState(null);
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
@@ -54,6 +65,11 @@ export const FirebaseProvider = ({ children }) => {
   const signUpUserWithEmailAndPassword = (name, email, password) => {
     createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then(() => {
+        set(ref_db(db, `users/${firebaseAuth.currentUser.uid}`), {
+          name,
+          email,
+          photoURL: "",
+        });
         updateProfile(firebaseAuth.currentUser, {
           displayName: name,
         }).then(() => {
@@ -89,7 +105,12 @@ export const FirebaseProvider = ({ children }) => {
   };
   const signInWithGoogle = () => {
     signInWithPopup(firebaseAuth, googleProvider)
-      .then(() => {
+      .then((res) => {
+        set(ref_db(db, `users/${firebaseAuth.currentUser.uid}`), {
+          name: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+        });
         toast({
           title: "Signed In Successfully.",
           status: "success",
@@ -112,7 +133,12 @@ export const FirebaseProvider = ({ children }) => {
   };
   const signInWithGithub = () => {
     signInWithPopup(firebaseAuth, githubProvider)
-      .then(() => {
+      .then((res) => {
+        set(ref_db(db, `users/${firebaseAuth.currentUser.uid}`), {
+          name: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+        });
         toast({
           title: "Signed In Successfully.",
           status: "success",
@@ -166,7 +192,6 @@ export const FirebaseProvider = ({ children }) => {
           position: "top",
           isClosable: true,
         });
-        
       })
       .catch((error) => {
         toast({
@@ -180,6 +205,41 @@ export const FirebaseProvider = ({ children }) => {
         });
       });
   };
+  const updateUserData = async (userDetails, name, image) => {
+    if (name || image) {
+      let imageURL = "";
+      if (image) {
+        const imageRef = ref_storage(storage, `images/profile/${user.uid}`);
+        const uploadRef = await uploadBytes(imageRef, image);
+        imageURL = await getDownloadURL(uploadRef.ref);
+      }
+      set(ref_db(db, `users/${user.uid}`), {
+        ...userDetails,
+        name: name ? name : userDetails.name,
+        photoURL: image ? imageURL : userDetails.photoURL,
+      });
+      await updateProfile(firebaseAuth.currentUser, {
+        displayName: name ? name : userDetails.name,
+        photoURL: image ? imageURL : userDetails.photoURL,
+      });
+      toast({
+        title: "Profile Updated Successfully.",
+        status: "success",
+        variant: "subtle",
+        position: "top",
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Please fill at least one field.",
+        status: "error",
+        variant: "subtle",
+        position: "top",
+        isClosable: true,
+      });
+    }
+  };
+
   const isSignedIn = user ? true : false;
   return (
     <FirebaseContext.Provider
@@ -191,6 +251,9 @@ export const FirebaseProvider = ({ children }) => {
         signInUserWithEmailAndPassword,
         signOutUser,
         user,
+        userName,
+        setUserName,
+        updateUserData,
       }}
     >
       {children}

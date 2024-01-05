@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { NavHashLink } from "react-router-hash-link";
 import {
+  Avatar,
   Box,
   Collapse,
   HStack,
@@ -25,14 +26,23 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { BsHandbag } from "react-icons/bs";
 import CustomButton from "./CustomButton";
 import { useFirebase } from "../context/Firebase";
+import { db } from "../context/Firebase";
+import { onValue, ref } from "firebase/database";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
   const isSignedIn = useFirebase().isSignedIn;
   const signOut = useFirebase().signOutUser;
-  const userName = useFirebase().user?.displayName;
+  const [userDetails, setUserDetails] = useState();
   const user = useFirebase().user;
+
+  useEffect(() => {
+    onValue(ref(db, `users/${user?.uid}`), (snapshot) => {
+      setUserDetails(snapshot.val());
+    });
+  }, []);
+
   return (
     <>
       <Box borderBottom={"1.5px solid #658C4A"}>
@@ -57,17 +67,26 @@ export default function Navbar() {
               <>
                 <Menu>
                   <MenuButton>
-                    <RiUserLine
-                      size={"1.5rem"}
-                      color="gray"
-                      cursor={"pointer"}
+                    <Avatar
+                    src={userDetails?.photoURL}
+                    name={userDetails?.name}
+                      bgColor={"white"}
+                      border={"1.5px solid gray"}
+                      size={"sm"}
+                      icon={
+                        <RiUserLine
+                          size={"1rem"}
+                          color="gray"
+                          cursor={"pointer"}
+                        />
+                      }
                     />
                   </MenuButton>
                   <MenuList>
                     <Link to={`/profile/${user.uid}`}>
                       <MenuItem textTransform={"capitalize"}>
                         <FaRegUserCircle color="#658c4a" /> &nbsp;
-                        {userName !== null ? userName : "User"}
+                        {userDetails?.name}
                       </MenuItem>
                     </Link>
                     <MenuItem

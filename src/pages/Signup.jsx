@@ -28,6 +28,11 @@ export default function Signup() {
     firebase.signUpUserWithEmailAndPassword;
   const signInWithGoogle = firebase.signInWithGoogle;
   const signInWithGithub = firebase.signInWithGithub;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    firebase.setUserName(name);
+    createUserWithEmailAndPassword(name, email, password);
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
     if (firebase.isSignedIn) {
@@ -48,67 +53,69 @@ export default function Signup() {
         >
           Sign Up
         </Heading>
-        <FormControl fontFamily={"'Inter', sans-serif"}>
-          <FormLabel>Full Name</FormLabel>
-          <Input
-            mb={5}
-            type="text"
-            borderRadius={"2rem"}
-            placeholder="Your Name"
-            focusBorderColor="#658C4A"
-            border={"1px solid #658C4A"}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <FormLabel>Email address</FormLabel>
-          <Input
-            type="email"
-            borderRadius={"2rem"}
-            placeholder="Enter your email"
-            focusBorderColor="#658C4A"
-            border={"1px solid #658C4A"}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <FormHelperText>We'll never share your email.</FormHelperText>
-          <FormLabel mt={5}>Password</FormLabel>
-          <InputGroup
-            focusBorderColor="#658C4A"
-            border={"1px solid #658C4A"}
-            borderRadius={"2rem"}
-          >
+        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+          <FormControl fontFamily={"'Inter', sans-serif"}>
+            <FormLabel>Full Name</FormLabel>
             <Input
-              type={showPassword ? "text" : "password"}
+              mb={5}
+              type="text"
               borderRadius={"2rem"}
-              placeholder="Enter your password"
+              placeholder="Your Name"
               focusBorderColor="#658C4A"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              border={"1px solid #658C4A"}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
-            <InputRightAddon
-              backgroundColor={"transparent"}
-              borderRadius={"0 2rem 2rem 0"}
-              cursor={"pointer"}
-              onClick={() => setShowPassword(!showPassword)}
+            <FormLabel>Email address</FormLabel>
+            <Input
+              type="email"
+              borderRadius={"2rem"}
+              placeholder="Enter your email"
+              focusBorderColor="#658C4A"
+              border={"1px solid #658C4A"}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <FormHelperText>We'll never share your email.</FormHelperText>
+            <FormLabel mt={5}>Password</FormLabel>
+            <InputGroup
+              focusBorderColor="#658C4A"
+              border={"1px solid #658C4A"}
+              borderRadius={"2rem"}
             >
-              {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-            </InputRightAddon>
-          </InputGroup>
-        </FormControl>
-        <Button
-          my={5}
-          borderRadius={"2rem"}
-          color={"white"}
-          bgColor={"brand.1"}
-          variant={"solid"}
-          letterSpacing={"1px"}
-          fontFamily={"'Inter', sans-serif"}
-          w={"full"}
-          _hover={{ bgColor: "rgba(101, 140, 74, 0.9)" }}
-          onClick={() => createUserWithEmailAndPassword(name, email, password)}
-        >
-          Sign Up
-        </Button>
+              <Input
+                type={showPassword ? "text" : "password"}
+                borderRadius={"2rem"}
+                placeholder="Enter your password"
+                focusBorderColor="#658C4A"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightAddon
+                backgroundColor={"transparent"}
+                borderRadius={"0 2rem 2rem 0"}
+                cursor={"pointer"}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+              </InputRightAddon>
+            </InputGroup>
+          </FormControl>
+          <Button
+            my={5}
+            borderRadius={"2rem"}
+            color={"white"}
+            bgColor={"brand.1"}
+            variant={"solid"}
+            letterSpacing={"1px"}
+            fontFamily={"'Inter', sans-serif"}
+            w={"full"}
+            _hover={{ bgColor: "rgba(101, 140, 74, 0.9)" }}
+            type="submit"
+          >
+            Sign Up
+          </Button>
+        </form>
         <Text fontFamily={"'Inter', sans-serif"}>Or Sign Up with</Text>
         <Button
           my={5}
