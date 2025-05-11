@@ -22,14 +22,13 @@ import {
 import { getDatabase, ref as ref_db, set } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC_tlSLNCd7UwEn1FQYwrqLyNzNzs0U9DQ",
-  authDomain: "ecoshop-b5edf.firebaseapp.com",
-  projectId: "ecoshop-b5edf",
-  storageBucket: "ecoshop-b5edf.appspot.com",
-  messagingSenderId: "1024688150342",
-  appId: "1:1024688150342:web:366331664d56a397673747",
-  measurementId: "G-5853F8Q1FG",
-  databaseURL: "https://ecoshop-b5edf-default-rtdb.firebaseio.com",
+  apiKey: "AIzaSyB_ZZYR9DvE2uBZWTRwCDbFZQ6ROQMPfgA",
+  authDomain: "ecoshopp-c3a4d.firebaseapp.com",
+  projectId: "ecoshopp-c3a4d",
+  storageBucket: "ecoshopp-c3a4d.firebasestorage.app",
+  messagingSenderId: "714063893040",
+  appId: "1:714063893040:web:4af8b095f1b4521e2b53f5",
+  databaseURL: "https://ecoshopp-c3a4d-default-rtdb.firebaseio.com/",
 };
 
 function capitalizeFirstLetter(string) {
